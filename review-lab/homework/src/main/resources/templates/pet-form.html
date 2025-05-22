@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a pet</title>
+    <style>
+        span.error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navigation-tab :: navigation}"></div>
+<form th:action="${pet.getPetId() == null} ? @{/pets/create} : @{/pets/edit/{petId}(petId=${pet.getPetId()})}"
+      method="post" th:object="${pet}">
+    <div>
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name" th:field="*{name}" minlength="3" maxlength="10"/>
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="Name error"></span>
+    </div>
+    <div>
+        <label for="breed">Breed: </label>
+        <input type="text" id="breed" name="breed" th:field="*{breed}" minlength="3" maxlength="10"/>
+        <span th:if="${#fields.hasErrors('breed')}" th:errors="*{breed}" class="Breed error"></span>
+    </div>
+    <div>
+        <label for="age">Age: </label>
+        <input type="number" id="age" name="age" th:field="*{age}" min="1" max="10"/>
+        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="Age error"></span>
+    </div>
+    <input type="submit" th:value="${pet.getPetId() == null} ? 'Create' : 'Update'"/>
+</form>
+</body>
+</html>
