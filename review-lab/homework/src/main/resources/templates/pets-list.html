@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pets List</title></head>
+<body>
+<div th:replace="~{fragments/navigation-tab :: navigation}"></div>
+<div th:each="pet : ${pets}"
+     style="display: inline-list-item; justify-content: space-evenly; background: lightskyblue; padding: 20px; margin-top: 10px">
+    <p th:text="'Name: ' + ${pet.getName()}"></p>
+    <p th:text="'Breed: ' + ${pet.getBreed()}"></p>
+    <p th:text="'Age: ' + ${pet.getAge()}"></p>
+    <a th:href="@{/pets/{id}(id=${pet.getPetId()})}">View details</a>
+    <a th:href="@{/pets/edit/{id}(id=${pet.getPetId()})}">Update details</a>
+    <form method="post" th:action="@{/pets/delete/{petId}(petId=${pet.getPetId()})}">
+        <button>Delete</button>
+    </form>
+</div>
+</body>
+</html>
